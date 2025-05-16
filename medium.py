@@ -48,7 +48,16 @@ def searchMatrix(matrix, target):
         return True
   return False
 
-#14
+#14 find first and last elements in a sorted array 
+def findFirstAndLast(arr, target): 
+  first = -1
+  last = -1
+  for i in range(len(arr)): 
+    if arr[i] == target: 
+      if first == -1: 
+        first = i
+      last = i
+  return (first, last)
 
 
 #15 index of fixed point
@@ -72,7 +81,14 @@ def sumOfDigit(num):
   res = sum(digits)
   return res
 
-#26
+#26 find the prime factor of a number 
+def findPrimeFactor(num): 
+  primeFactors = []
+  for i in range(2, num+1): 
+    if num % i == 0: 
+      if isPrime(i) == 1: 
+        primeFactors.append(i)
+  return primeFactors
 
 #27 cal sum of prime < n 
 def sumOfPrime(n): 
@@ -86,7 +102,44 @@ def sumOfPrime(n):
 def ifInside(x,y,x1,y1,x2,y2):
   return (x1<=x<=x2) and (y2<=y<=y1)
 
-#34 35 36 37 38 44
+#34 determine if matrix is symmetric
+def isSymmetric(matrix):
+  n = len(matrix)
+  for i in range(n): 
+    for j in range(n): 
+      if matrix[i][j] != matrix[j][i]: 
+        return False
+  return True 
+
+
+#35 rotate matrix
+def rotateMatrix(matrix): 
+  n = len(matrix)
+  for i in range(n): 
+    for j in range(i, n): 
+      matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+  for i in range(n): 
+    matrix[i].reverse()
+  return matrix
+
+#36 find number of islands in given matrix
+
+#37 return matrix after spirally traversing it
+
+
+#38 find transpose of matrix
+def transposeMatrix(matrix): 
+  row = []
+  new_matrix = []
+  for i in range(len(matrix)):
+    for j in range(len(matrix[i])): 
+      row.append(matrix[j][i])
+    new_matrix.append(row)
+    row = []
+  return new_matrix
+
+#44 find majority element in array 
+
 
 #45 is valid bracklets
 def isValidBracklets(bracklets): 
@@ -117,7 +170,20 @@ def find1stNonRepeat(text):
       return i
   return -1
 
-#51
+#51 calculate dot product of two matrix
+def dotProduct(matrix1, matrix2): 
+  if len(matrix1[0]) != len(matrix2): 
+    return -1
+  res = []
+  for i in range(len(matrix1)): 
+    row = []
+    for j in range(len(matrix2[0])): 
+      sum = 0 
+      for k in range(len(matrix2)): 
+        sum += matrix1[i][k] * matrix2[k][j]
+      row.append(sum)
+    res.append(row)
+  return res
 
 #54 check specific triangle
 def checkSpecificTriangle(x1,y1,x2,y2,x3,y3): 
@@ -134,7 +200,24 @@ def checkSpecificTriangle(x1,y1,x2,y2,x3,y3):
   else: 
     print("scalene")
 
-#57 
+#57 distance between point and line segment
+def distancePointLineSegment(x1,y1,x2,y2,x3,y3):
+  P = [x1,y1]
+  A = [x2,y2]
+  B = [x3,y3]
+  vectorAB = [B[0] - A[0], B[1] - A[1]]
+  vectorAP = [P[0] - A[0], P[1] - A[1]] 
+  dotProductABAP = vectorAB[0] * vectorAP[0] + vectorAB[1] * vectorAP[1]
+  dotProductABAB = vectorAB[0] * vectorAB[0] + vectorAB[1] * vectorAB[1]  
+  t = dotProductABAP / dotProductABAB
+  if t < 0: 
+    return calDistance(P, A)
+  elif t > 1: 
+    return calDistance(P, B)
+  else: 
+    x = A[0] + t * vectorAB[0]
+    y = A[1] + t * vectorAB[1]
+    return calDistance(P, [x,y])
 
 #64 find the kth largest in array
 def findKthLargest(arr, k): 
@@ -168,6 +251,8 @@ if __name__=="__main__":
   # arr2 = list(map(int, input().split()))
   # print(ifInside(1,1,1,7,4,3))
   m, n = map(int, input().split())
-  matrix = [list(map(int, input().split())) for _ in range(m)]
-  target = int(input())
-  print(searchMatrix(matrix, target))
+  matrix1 = [list(map(int, input().split())) for _ in range(m)]
+  # target = int(input())
+  x, y = map(int, input().split())
+  matrix2 = [list(map(int, input().split())) for _ in range(y)]
+  print(dotProduct(matrix1, matrix2))
